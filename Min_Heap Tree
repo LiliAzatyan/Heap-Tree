@@ -17,7 +17,6 @@ class Min_Heap
     Min_Heap& operator = (const Min_Heap<T>& heap); //copy operator
     Min_Heap& operator = (Min_Heap<T>&& heap); //move operator
 
-    //void insert(T);----------------------------------------
 
 template <typename E>
 friend bool operator==(const Min_Heap<E>&, const Min_Heap<E>&); //==(equal) operatori gerbernum
@@ -25,11 +24,22 @@ friend bool operator==(const Min_Heap<E>&, const Min_Heap<E>&); //==(equal) oper
 template <typename E>
 friend bool operator != (const Min_Heap<E>&, const Min_Heap<E>&); //!=(no_equal) operatori gerbernum
 
+template <typename E>
+friend std::ostream& operator<<(std::ostream& out ,Min_Heap<E> &obj) //<<(cout) operatori gerbernum
+{
+    for(int i = 0;i < obj.vec_heap.size();++i)
+    {
+        out << obj.vec_heap[i] << "  ";
+    }
+    return out;
+};
+
+
 Min_Heap operator+=(const Min_Heap<T>& sumequal) //+=(sumequal) operatori gerbernum
 {
     if(vec_heap.size() == sumequal.vec_heap.size())
     {
-        for(int i = 0; i < vec_heap.size();++i)
+        for(int i = 0; i < vec_heap.size(); ++i)
         {
             this->vec_heap[i] += sumequal.vec_heap[i];
         }
@@ -41,6 +51,37 @@ Min_Heap operator+=(const Min_Heap<T>& sumequal) //+=(sumequal) operatori gerber
             this->vec_heap[i] += sumequal.vec_heap[i];
         }
     }
+}
+
+Min_Heap<T> operator+(const Min_Heap<T> &sum) //+(sum) operatori gerbernum
+{
+    Min_Heap <T> tmp;
+    if(sum.vec_heap.size() > vec_heap.size())
+        {
+            for(int i = 0; i < sum.vec_heap.size();++i)
+            {
+                tmp.vec_heap.push_back(vec_heap[i] + sum.vec_heap[i]);
+            }
+        }
+    if(sum.vec_heap.size() < vec_heap.size())
+    {
+        for(int i = 0; i < sum.vec_heap.size();++i)
+        {
+            tmp.vec_heap.push_back(vec_heap[i] + sum.vec_heap[i]);
+        }
+        for(int i = sum.vec_heap.size();i < vec_heap.size();++i) 
+        {
+            tmp.vec_heap.push_back(vec_heap[i]);
+        }
+    }
+    if(sum.vec_heap.size() == vec_heap.size())
+    {
+        for(int i = 0; i < vec_heap.size();++i)
+        {
+            tmp.vec_heap.push_back(vec_heap[i] + sum.vec_heap[i]);
+        }
+    }
+    return tmp;
 }
 
 };
@@ -112,5 +153,26 @@ bool operator!=(const Min_Heap<T>& equal1, const Min_Heap<T>& equal2)
 {
     return !(equal1 == equal2);
 }
+
+// void maxHeapify(int ptr[], int i, int s) //max_heapify() 
+// {
+//     int l = 2*i + 1;
+// 	int r = 2*i + 2;
+//     int largest = i;
+//     if ((ptr[l] > ptr[largest]) && l < s)
+//     {
+//         largest = l;
+//     }
+//     if ((ptr[r] > ptr[largest]) && r < s)
+//     {
+//         largest = r;
+//     }
+//     if (largest != i)
+//     {
+//         std::swap(ptr[i], ptr[largest]);
+//         maxHeapify(ptr, largest, s);
+//     }
+// }
+
 
 
