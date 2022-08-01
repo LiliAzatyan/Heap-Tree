@@ -1,0 +1,118 @@
+#include <iostream>
+#include <initializer_list>
+#include <vector>
+
+template<typename T>
+class Min_Heap
+{
+    private:
+        std::vector<T> vec_heap;
+    public:
+        Min_Heap() {} //default constructor
+        Min_Heap(std::initializer_list<T> obj); //std::initializer_list
+        Min_Heap(const Min_Heap&); //copy constructor
+        Min_Heap(Min_Heap&&); //move constructor
+        ~Min_Heap() {} //destructor
+
+    Min_Heap& operator = (const Min_Heap<T>& heap); //copy operator
+    Min_Heap& operator = (Min_Heap<T>&& heap); //move operator
+
+    //void insert(T);----------------------------------------
+
+template <typename E>
+friend bool operator==(const Min_Heap<E>&, const Min_Heap<E>&); //==(equal) operatori gerbernum
+
+template <typename E>
+friend bool operator != (const Min_Heap<E>&, const Min_Heap<E>&); //!=(no_equal) operatori gerbernum
+
+Min_Heap operator+=(const Min_Heap<T>& sumequal) //+=(sumequal) operatori gerbernum
+{
+    if(vec_heap.size() == sumequal.vec_heap.size())
+    {
+        for(int i = 0; i < vec_heap.size();++i)
+        {
+            this->vec_heap[i] += sumequal.vec_heap[i];
+        }
+    }
+    if(vec_heap.size() < sumequal.vec_heap.size())
+    {
+        for(int i = 0; i < vec_heap.size();++i)
+        {
+            this->vec_heap[i] += sumequal.vec_heap[i];
+        }
+    }
+}
+
+};
+
+int main()
+{
+    Min_Heap<int> a;
+    Min_Heap<int> b;
+    bool f = (a == b);
+    std::cout << f;
+    std::cout << (a != b);
+
+}
+
+template <typename T>
+Min_Heap<T>::~Min_Heap() = default;
+
+//----------------------
+template <typename T> //initializer_list
+Min_Heap<T>::Min_Heap(std::initializer_list<T> obj)
+{
+    for (auto x : obj.begin(); x != obj.end(); ++x)
+    {
+        // vec_heap.0push_back(*x);
+        // this->insert(*x)
+    }
+    this -> MaxHeapify;
+}
+//---------------------
+
+template <typename T> //copy constructor
+Min_Heap<T>::Min_Heap(const Min_Heap<T>& obj) : vec_heap{obj.vec_heap}
+{}
+
+template <typename T> //move constructor
+Min_Heap<T>::Min_Heap(Min_Heap<T>&& obj) : vec_heap{std::move(obj.vec_heap)}
+{}
+
+template <typename T> //copy operator assignment = 
+Min_Heap<T>& Min_Heap<T>::operator = (const Min_Heap<T>& heap) 
+{
+    vec_heap = heap.vec_heap;
+    return *this;
+}
+
+template <typename T> //move operator assignment =
+Min_Heap<T>& Min_Heap<T>::operator = (Min_Heap<T>&& heap) 
+{
+    vec_heap = std::move(heap.vec_heap);
+    return *this;
+}
+
+
+template<typename T>
+bool operator==(const Min_Heap<T>& equal1, const Min_Heap<T>& equal2) {
+    if (equal1.vec_heap.size() != equal2.vec_heap.size())
+    {
+        return false;
+    }
+    for (int i = 0; i < equal1.vec_heap.size(); ++i)
+    {
+        if (equal1.vec_heap[i] != equal2.vec_heap[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+template <typename T>
+bool operator!=(const Min_Heap<T>& equal1, const Min_Heap<T>& equal2) //!=(no_equal) operatori gerbernum
+{
+    return !(equal1 == equal2);
+}
+
+
