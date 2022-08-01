@@ -55,14 +55,12 @@ int main()
 
 }
 
-template <typename T>
-Min_Heap<T>::~Min_Heap() = default;
-
 //----------------------
 template <typename T> //initializer_list
 Min_Heap<T>::Min_Heap(std::initializer_list<T> obj)
 {
-    for (auto x : obj.begin(); x != obj.end(); ++x)
+    int x;
+    for (x == obj.begin(); x != obj.end(); ++x)
     {
         // vec_heap.0push_back(*x);
         // this->insert(*x)
@@ -94,7 +92,7 @@ Min_Heap<T>& Min_Heap<T>::operator = (Min_Heap<T>&& heap)
 }
 
 
-template<typename T>
+template<typename T> //==(equal) operatori gerbernum
 bool operator==(const Min_Heap<T>& equal1, const Min_Heap<T>& equal2) {
     if (equal1.vec_heap.size() != equal2.vec_heap.size())
     {
@@ -109,8 +107,8 @@ bool operator==(const Min_Heap<T>& equal1, const Min_Heap<T>& equal2) {
     return true;
 }
 
-template <typename T>
-bool operator!=(const Min_Heap<T>& equal1, const Min_Heap<T>& equal2) //!=(no_equal) operatori gerbernum
+template <typename T> //!=(no_equal) operatori gerbernum
+bool operator!=(const Min_Heap<T>& equal1, const Min_Heap<T>& equal2) 
 {
     return !(equal1 == equal2);
 }
